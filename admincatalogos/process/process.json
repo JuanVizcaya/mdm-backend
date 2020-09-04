@@ -1,0 +1,252 @@
+{
+    "validacionDeCarga":
+    {
+        "steps":
+        {
+            "0": {
+                "stepNumber": 0,
+                "processStep": "",
+                "status": "",
+                "statusDesc": "",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-1": {
+                "stepNumber": -1,
+                "processStep": "Cancelación",
+                "status": "Proceso cancelado",
+                "statusDesc": "Cancelado",
+                "buttons": "0-0-0-0-2",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-2": {
+                "stepNumber": -2,
+                "status": "Proceso borrado",
+                "processStep": "Borrado",
+                "statusDesc": "Borrado",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo": 0
+            },
+            "2": {
+                "stepNumber": 2,
+                "status": "Validando Archivos",
+                "processStep": "Validación inicial",
+                "statusDesc": "En validación inicial",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Validación de tipo archivos",
+                "activo": 1
+            },
+            "3": {
+                "stepNumber": 3,
+                "status": "Validando Archivos",
+                "processStep": "Validación de tipo archivos",
+                "statusDesc": "Validación de tipo archivos correcta",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Validación de estructura archivos",
+                "activo": 1
+            },
+            "4": {
+                "stepNumber": 4,
+                "status": "Validando Archivos",
+                "processStep": "Validación de estructura archivos",
+                "statusDesc": "Validación de estructura archivos correcta",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Guardar en tablas temporales",
+                "activo": 1
+            },
+            "5": {
+                "stepNumber": 5,
+                "status": "Archivos validados",
+                "processStep": "Guardar en tablas temporales",
+                "statusDesc": "Se guardó en tablas temporales correctamente",
+                "buttons": "1-0-0-0-1",
+                "nextStep": "-",
+                "activo": 0
+            }
+        },
+        "cat": {
+            "ok": "Validación del catálogo correcta",
+            "readError": "El archivo del catálogo no es CSV o su formato es inválido.",
+            "fieldsError": "Estructrura del catálogo incorrecta.",
+            "entidades": {
+                "fields": ["CLAVE DE AGEE","NOMBRE DE AGEE","NOMBRE ABREVIADO DE AGEE","POB_TOTAL","TOTAL DE VIVIENDAS HABITADAS","POB_MASCULINA","POB_FEMENINA"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","p_total","v_total","p_mas","p_fem"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_CAB","NOM_CAB","POB_TOTAL","TOTAL DE VIVIENDAS HABITADAS","POB_MASCULINA","POB_FEMENINA"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_cab","nom_cab","p_total","v_total","p_mas","p_fem"]
+            },
+            "localidades": {
+                "fields": ["MAPA","CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_LOC","NOM_LOC","ÁMBITO","LATITUD","LONGITUD","LAT_DECIMAL","LON_DECIMAL","ALTITUD","CVE_CARTA","POB_TOTAL","POB_MASCULINA","POB_FEMENINA","TOTAL DE VIVIENDAS HABITADAS"],
+                "newFields": ["mapa_loc","cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_locc","nom_loc","ambito","latitud","longitud","lat_dec","lon_dec","altitud","cve_carta","p_total","p_mas","p_fem","v_total"]
+            }
+        },
+        "eqv": {
+            "readError": "El archivo de la tabla de equivalencias no es CSV o su formato es inválido.",
+            "fieldsError": "Estructrura de la tabla de equivalencias incorrecta.",
+            "multiDatesError": "La tabla de equivalencias contiene más de un periodo.",
+            "entidades": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_ENT_ACT","NOM_ENT_ACT","FECHA_ACT","COD_ACT","DESCRIPT"],
+                "newFields": ["cveent_ori","noment_ori","cveent_act","noment_act","fecha_act","cgo_act","descgo_act"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_MUN_ORI","NOM_MUN_ORI","CVE_ENT_ACT","NOM_ENT_ACT","CVE_MUN_ACT","NOM_MUN_ACT","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cveent_ori","noment_ori","cvemuncori","nommun_ori","cveent_act","noment_act","cvemuncact","nommun_act","fecha_act","cgo_act","descgo_act"]
+            },
+            "localidades": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_MUN_ORI","NOM_MUN_ORI","CVE_LOC_ORI","NOM_LOC_ORI","AMBITO_ORI","CVE_ENT_ACT","NOM_ENT_ACT","CVE_MUN_ACT","NOM_MUN_ACT","CVE_LOC_ACT","NOM_LOC_ACT","AMBITO_ACT","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cveent_ori","noment_ori","cvemuncori","nommun_ori","cveloccori","nomloc_ori","ambito_ori","cveent_act","noment_act","cvemuncact","nommun_act","cveloccact","nomloc_act","ambito_act","fecha_act","cgo_act","descgo_act"]
+            }
+        },
+        "act": {
+            "readError": "El archivo del registro de actualización no es CSV o su formato es inválido.",
+            "fieldsError": "Estructrura del registro de actualización incorrecta.",
+            "multiDatesError": "El registro de actualización contiene más de un periodo.",
+            "entidades": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","FECHA_ACT","COD_ACT","DESCRIPT"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","fecha_act","cgo_act","descgo_act"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_CAB","NOM_LOC","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_cab","nom_cab","fecha_act","cgo_act","descgo_act"]
+            },
+            "localidades": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_LOC","NOM_LOC","AMBITO","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_locc","nom_loc","ambito","fecha_act","cgo_act","descgo_act"]
+            }
+        },
+        "backMessages":{
+            "inicio": "Validación: Inicia proceso",
+            "5": "Validación: Validando versión",
+            "6": "Validación: Obteniendo movimientos",
+            "7": "Validación: Validando Movimientos",
+            "7.5": "Validación: Primera carga detectada",
+            "fin": "Validación: Finalizó el proceso"
+        },
+        "diffCantMovesError": "Los movimientos de la tabla de equivalencias y el registro de actualización difieren.",
+        "lowDatesError":"Los archivos contienen un periodo inferior al existente.",
+        "diffFilesVersionError": "Los archivos de registro de actualización y tabla de equivalencias tienen periodos diferentes."
+
+    },
+    "validacionDeCifras":
+    {
+        "steps":
+        {
+            "0": {
+                "stepNumber": 0,
+                "processStep": "",
+                "status": "",
+                "statusDesc": "",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-1": {
+                "stepNumber": -1,
+                "processStep": "Cancelación",
+                "status": "Proceso cancelado",
+                "statusDesc": "Cancelado",
+                "buttons": "0-0-0-0-2",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-2": {
+                "stepNumber": -2,
+                "status": "Proceso borrado",
+                "processStep": "Borrado",
+                "statusDesc": "Borrado",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo": 0
+            },
+            "6": {
+                "stepNumber": 6,
+                "status": "Validando movimientos",
+                "statusDesc": "En validación",
+                "processStep": "Obtención de movimientos",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Validación cantidades",
+                "activo": 1
+            },
+            "7": {
+                "stepNumber": 7,
+                "status": "Validando movimientos",
+                "statusDesc": "Se obtuvieron los movimientos",
+                "processStep": "Validación cantidades",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Validación de versión",
+                "activo": 1
+            },
+            "8": {
+                "stepNumber": 8,
+                "status": "Validando la versión",
+                "statusDesc": "Se validaron las cifras",
+                "processStep": "Validación de versión",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo": 1
+            },
+            "9": {
+                "stepNumber": 9,
+                "status": "Validación inicial correcta",
+                "processStep": "Validación correcta",
+                "statusDesc": "Validación correcta",
+                "buttons": "0-1-0-0-1",
+                "nextStep": "-",
+                "activo": 0
+            }
+        },
+        "errors": {
+            "lastVersion": "La versión del catálogo a cargar debe ser superior a la existente en el sistema: ",
+            "actVSeqv": "Los movimientos en la tabla de equivalencias y el registro de actualización no coinciden.",
+            "actVScat": "Los movimientos en la tabla de equivalencias y catálogo no coinciden.",
+            "actVersion": "La fecha de un movimiento en el regostro de actualización no coincide con la versión indicada: ",
+            "eqvVersion": "La fecha de un movimiento en la tabla de equivalencias no coincide con la versión indicada: "
+        }
+    },
+    "DQ":
+    {
+        "steps":
+        {
+            "0": {
+                "stepNumber": 0,
+                "processStep": "",
+                "status": "",
+                "statusDesc": "",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-1": {
+                "stepNumber": -1,
+                "processStep": "Cancelación",
+                "status": "Proceso cancelado",
+                "statusDesc": "Cancelado",
+                "buttons": "0-0-0-0-2",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-2": {
+                "stepNumber": -2,
+                "status": "Proceso borrado",
+                "processStep": "Borrado",
+                "statusDesc": "Borrado",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo": 0
+            },
+            "10": {
+                "stepNumber": 10,
+                "status": "Validando movimientos",
+                "statusDesc": "En validación",
+                "processStep": "Obtención de movimientos",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Validación cantidades",
+                "activo": 1
+            }
+        }
+    }
+}
