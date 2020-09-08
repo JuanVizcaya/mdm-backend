@@ -240,12 +240,81 @@
             },
             "10": {
                 "stepNumber": 10,
-                "status": "Validando movimientos",
-                "statusDesc": "En validación",
-                "processStep": "Obtención de movimientos",
+                "status": "En limpieza de información",
+                "statusDesc": "Limpiando catálogo",
+                "processStep": "Limpieza de catálogo",
                 "buttons": "0-0-0-0-0",
-                "nextStep": "Validación cantidades",
+                "nextStep": "Limpieza de tabla de equivalencias",
                 "activo": 1
+            },
+            "11": {
+                "stepNumber": 11,
+                "status": "En limpieza de información",
+                "statusDesc": "Limpiando tabla de equivalencias",
+                "processStep": "Limpieza de tabla de equivalencias",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Limpieza de registro de actualización",
+                "activo": 1
+            },
+            "12": {
+                "stepNumber": 12,
+                "status": "En limpieza de información",
+                "statusDesc": "Limpiando registro de actualización",
+                "processStep": "Limpieza de registro de actualización",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Limpieza de registro de actualización",
+                "activo": 1
+            },
+            "13": {
+                "stepNumber": 13,
+                "status": "Limpieza correcta",
+                "processStep": "Limpieza correcta",
+                "statusDesc": "Limpieza correcta",
+                "buttons": "0-0-1-0-1",
+                "nextStep": "-",
+                "activo": 0
+            }
+        },
+        "cat": {
+            "entidades": {
+                "fields": ["CLAVE DE AGEE","NOMBRE DE AGEE","NOMBRE ABREVIADO DE AGEE","POB_TOTAL","TOTAL DE VIVIENDAS HABITADAS","POB_MASCULINA","POB_FEMENINA"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","p_total","v_total","p_mas","p_fem"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_CAB","NOM_CAB","POB_TOTAL","TOTAL DE VIVIENDAS HABITADAS","POB_MASCULINA","POB_FEMENINA"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_cab","nom_cab","p_total","v_total","p_mas","p_fem"]
+            },
+            "localidades": {
+                "fields": ["MAPA","CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_LOC","NOM_LOC","ÁMBITO","LATITUD","LONGITUD","LAT_DECIMAL","LON_DECIMAL","ALTITUD","CVE_CARTA","POB_TOTAL","POB_MASCULINA","POB_FEMENINA","TOTAL DE VIVIENDAS HABITADAS"],
+                "newFields": ["mapa_loc","cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_locc","nom_loc","ambito","latitud","longitud","lat_dec","lon_dec","altitud","cve_carta","p_total","p_mas","p_fem","v_total"]
+            }
+        },
+        "eqv": {
+            "entidades": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_ENT_ACT","NOM_ENT_ACT","FECHA_ACT","COD_ACT","DESCRIPT"],
+                "newFields": ["cveent_ori","noment_ori","cveent_act","noment_act","fecha_act","cgo_act","descgo_act"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_MUN_ORI","NOM_MUN_ORI","CVE_ENT_ACT","NOM_ENT_ACT","CVE_MUN_ACT","NOM_MUN_ACT","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cveent_ori","noment_ori","cvemuncori","nommun_ori","cveent_act","noment_act","cvemuncact","nommun_act","fecha_act","cgo_act","descgo_act"]
+            },
+            "localidades": {
+                "fields": ["CVE_ENT_ORI","NOM_ENT_ORI","CVE_MUN_ORI","NOM_MUN_ORI","CVE_LOC_ORI","NOM_LOC_ORI","AMBITO_ORI","CVE_ENT_ACT","NOM_ENT_ACT","CVE_MUN_ACT","NOM_MUN_ACT","CVE_LOC_ACT","NOM_LOC_ACT","AMBITO_ACT","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cveent_ori","noment_ori","cvemuncori","nommun_ori","cveloccori","nomloc_ori","ambito_ori","cveent_act","noment_act","cvemuncact","nommun_act","cveloccact","nomloc_act","ambito_act","fecha_act","cgo_act","descgo_act"]
+            }
+        },
+        "act": {
+            "entidades": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","FECHA_ACT","COD_ACT","DESCRIPT"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","fecha_act","cgo_act","descgo_act"]
+            },
+            "municipios": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_CAB","NOM_LOC","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_cab","nom_cab","fecha_act","cgo_act","descgo_act"]
+            },
+            "localidades": {
+                "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_LOC","NOM_LOC","AMBITO","FECHA_ACT","CGO_ACT","DESCRIP"],
+                "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_locc","nom_loc","ambito","fecha_act","cgo_act","descgo_act"]
             }
         }
     }
