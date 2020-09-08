@@ -37,9 +37,12 @@ def clear_temps(sender, instance, **kwargs):
     from os import getcwd
     
     engine = create_engine(f'postgresql://{settings.TEMP_FILES_USER}:{settings.TEMP_FILES_PASS}@{settings.TEMP_FILES_HOST}:{settings.TEMP_FILES_PORT}/{settings.TEMP_FILES_DBNAME}')
-    sql.execute(f'DROP TABLE IF EXISTS {instance.catTable}', engine)
-    sql.execute(f'DROP TABLE IF EXISTS {instance.eqvTable}', engine)
-    sql.execute(f'DROP TABLE IF EXISTS {instance.actTable}', engine)
+    if instance.catTable != '-':
+        sql.execute(f'DROP TABLE IF EXISTS {instance.catTable}', engine)
+    if instance.eqvTable != '-':
+        sql.execute(f'DROP TABLE IF EXISTS {instance.eqvTable}', engine)
+    if instance.actTable != '-':
+        sql.execute(f'DROP TABLE IF EXISTS {instance.actTable}', engine)
     
     delPath = f'media/catalogos/{instance.filesId}'
     if exists(delPath):

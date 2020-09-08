@@ -63,17 +63,11 @@ class Validacion(object):
         }
         self.checkFirstLoad()
         self.readTemp()
-        self.getCgo()
 
     def checkFirstLoad(self):
         self.firstLoad = True
         if self.lastVersion.filesVersion.year >= 2000:
             self.firstLoad = False
-
-    def getCgo(self):
-        self.cgoField = 'CGO_ACT'
-        if self.loadType == 'entidades':
-            self.cgoField = 'COD_ACT'
 
     def readTemp(self):
         self.dfs = {}
@@ -90,8 +84,8 @@ class Validacion(object):
             self.cifras['act']['numRecs'] = self.dfs['act'].shape[0]
             self.cifras['eqv']['numRecs'] = self.dfs['eqv'].shape[0]
             # MOVIMIENTOS POR CGO_ACT
-            self.cifras['act']['moves']['all'] = self.dfs['act'].groupby(self.cgoField)[[self.cgoField]].count().to_dict()[self.cgoField]
-            self.cifras['eqv']['moves']['all'] = self.dfs['eqv'].groupby(self.cgoField)[[self.cgoField]].count().to_dict()[self.cgoField]
+            self.cifras['act']['moves']['all'] = self.dfs['act'].groupby('cgo_act')[['cgo_act']].count().to_dict()['cgo_act']
+            self.cifras['eqv']['moves']['all'] = self.dfs['eqv'].groupby('cgo_act')[['cgo_act']].count().to_dict()['cgo_act']
             # OBTENCIÓN DE ALTAS Y BAJAS TOTALES
             for tipo in ['act','eqv']:
                 for cgo in self.cifras[tipo]['moves']['all'].keys():

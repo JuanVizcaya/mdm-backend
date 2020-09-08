@@ -72,6 +72,7 @@ class Validacion(object):
         engine = create_engine(f'postgresql://{settings.TEMP_FILES_USER}:{settings.TEMP_FILES_PASS}@{settings.TEMP_FILES_HOST}:{settings.TEMP_FILES_PORT}/{settings.TEMP_FILES_DBNAME}')
         for tipo in ['cat','eqv','act']:
             # self.files[tipo]['filesId'] = self.load.filesId
+            self.files[tipo] = self.files[tipo].rename(columns={ori:act for ori, act in zip(pData[tipo][self.loadType]['fields'], pData[tipo][self.loadType]['newFields'])})
             self.files[tipo].to_sql(f'tmp_{tipo}_{self.load.filesId}',engine,if_exists='replace',index=False, chunksize=10000)
         self.load.catTable = f'tmp_cat_{self.load.filesId}'
         self.load.eqvTable = f'tmp_eqv_{self.load.filesId}'
