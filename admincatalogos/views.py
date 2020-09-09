@@ -99,10 +99,11 @@ class DQAPI(APIView):
             return Response({'statusRequest': 'error',  'error': 'Id de carga inválido', 'idcarga': idcarga}, status=status.HTTP_400_BAD_REQUEST)
         if request.user != carga.author:
             return Response({'statusRequest': 'error', 'error': 'No tienes permisos sufucientes'}, status=status.HTTP_401_UNAUTHORIZED)
-        if carga.stepNumber != 5:
+        if carga.stepNumber != 9:
             return Response({'statusRequest': 'error', 'error': 'Este proceso no puede ejecutarse en la carga'}, status=status.HTTP_401_UNAUTHORIZED)
         
         serializedResponse = UploadFilesListSerializer(carga)
         resultadoDQ = dq(carga)
+        resultadoDQ['data'] = serializedResponse.data
         
-        return Response({'statusRequest': 'ok', 'data': None}, status=status.HTTP_200_OK)
+        return Response({'statusRequest': 'ok', 'data': resultadoDQ}, status=status.HTTP_200_OK)

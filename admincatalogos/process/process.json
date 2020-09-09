@@ -270,6 +270,15 @@
                 "status": "Limpieza correcta",
                 "processStep": "Limpieza correcta",
                 "statusDesc": "Limpieza correcta",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Guardar en tablas temporales",
+                "activo": 1
+            },
+            "14": {
+                "stepNumber": 14,
+                "status": "Limpieza correcta",
+                "processStep": "Guardar en tablas temporales",
+                "statusDesc": "Se guardó en tablas temporales",
                 "buttons": "0-0-1-0-1",
                 "nextStep": "-",
                 "activo": 0

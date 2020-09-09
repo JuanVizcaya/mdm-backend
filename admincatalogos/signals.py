@@ -37,12 +37,21 @@ def clear_temps(sender, instance, **kwargs):
     from os import getcwd
     
     engine = create_engine(f'postgresql://{settings.TEMP_FILES_USER}:{settings.TEMP_FILES_PASS}@{settings.TEMP_FILES_HOST}:{settings.TEMP_FILES_PORT}/{settings.TEMP_FILES_DBNAME}')
-    if instance.catTable != '-':
+
+    if instance.catTable == f'tmp_cat_{instance.filesId}':
         sql.execute(f'DROP TABLE IF EXISTS {instance.catTable}', engine)
-    if instance.eqvTable != '-':
+    elif instance.catTable == f'dq_tmp_{instance.filesType}_cat':
+        sql.execute(f'DELETE FROM {instance.catTable} WHERE "filesId" = \'{instance.filesId}\'', engine)
+
+    if instance.eqvTable == f'tmp_eqv_{instance.filesId}':
         sql.execute(f'DROP TABLE IF EXISTS {instance.eqvTable}', engine)
-    if instance.actTable != '-':
+    elif instance.eqvTable == f'dq_tmp_{instance.filesType}_eqv':
+        sql.execute(f'DELETE FROM {instance.eqvTable} WHERE "filesId" = \'{instance.filesId}\'', engine)
+
+    if instance.actTable == f'tmp_act_{instance.filesId}':
         sql.execute(f'DROP TABLE IF EXISTS {instance.actTable}', engine)
+    elif instance.actTable == f'dq_tmp_{instance.filesType}_act':
+        sql.execute(f'DELETE FROM {instance.actTable} WHERE "filesId" = \'{instance.filesId}\'', engine)
     
     delPath = f'media/catalogos/{instance.filesId}'
     if exists(delPath):
