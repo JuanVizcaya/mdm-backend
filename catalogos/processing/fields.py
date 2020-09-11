@@ -1,5 +1,5 @@
 from admincatalogos.process import dq_functions as dqf
-from django.db.models import CharField, DecimalField, IntegerField, DateField
+from django.db.models import CharField, DecimalField, IntegerField, DateField, BooleanField, AutoField
 
 toConcatenate = {
     'cve_munc': 'cve_ent',
@@ -50,5 +50,11 @@ model_fields = {
     'fecha_act': {'model': DateField(verbose_name='Fecha de actualización'), 'rules': [dqf.remove_spaces,dqf.to_date]},
     'cgo_act': {'model': CharField(verbose_name='Código de actualización',max_length=2), 'rules': [dqf.upper,dqf.remove_spaces]},
     'descgo_act': {'model': CharField(verbose_name='Descripción del código de actualización',max_length=110), 'rules': [dqf.upper,dqf.strip]},
-    'estatus': {'model': CharField(verbose_name='Estatus',max_length=10)}
+    'snap_id': {'model': IntegerField(verbose_name='Id snapshot')},
+    'fecha_ini': {'model': DateField(verbose_name='Fecha de inicio del movimiento')},
+    'fecha_fin': {'model': DateField(verbose_name='Fecha de fin del movimiento')},
+    'fecha_reg': {'model': DateField(verbose_name='Fecha registro del movimiento')},
+    'es_activa': {'model': BooleanField(verbose_name='Es activa')},
+    'mov_inegi': {'model': BooleanField(verbose_name='Reportado por INEGI')},
+    'nuevo_reg': {'model': BooleanField(verbose_name='Primer registro')},
 }

@@ -242,7 +242,7 @@
                 "stepNumber": 10,
                 "status": "En limpieza de información",
                 "statusDesc": "Limpiando catálogo",
-                "processStep": "Limpieza de catálogo",
+                "processStep": "Leyendo tablas temporales",
                 "buttons": "0-0-0-0-0",
                 "nextStep": "Limpieza de tabla de equivalencias",
                 "activo": 1
@@ -324,6 +324,66 @@
             "localidades": {
                 "fields": ["CVE_ENT","NOM_ENT","NOM_ABR","CVE_MUN","NOM_MUN","CVE_LOC","NOM_LOC","AMBITO","FECHA_ACT","CGO_ACT","DESCRIP"],
                 "newFields": ["cve_ent","nom_ent","abr_ent","cve_munc","nom_mun","cve_locc","nom_loc","ambito","fecha_act","cgo_act","descgo_act"]
+            }
+        }
+    },
+    "simulacion":
+    {
+        "steps":
+        {
+            "0": {
+                "stepNumber": 0,
+                "processStep": "",
+                "status": "",
+                "statusDesc": "",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-1": {
+                "stepNumber": -1,
+                "processStep": "Cancelación",
+                "status": "Proceso cancelado",
+                "statusDesc": "Cancelado",
+                "buttons": "0-0-0-0-2",
+                "nextStep": "-",
+                "activo" :0
+            },
+            "-2": {
+                "stepNumber": -2,
+                "status": "Proceso borrado",
+                "processStep": "Borrado",
+                "statusDesc": "Borrado",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "-",
+                "activo": 0
+            },
+            "15": {
+                "stepNumber": 15,
+                "status": "En simulación",
+                "statusDesc": "En lectura de tablas",
+                "processStep": "Leyendo tablas temporales",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Obtener altas",
+                "activo": 1
+            },
+            "16": {
+                "stepNumber": 16,
+                "status": "En simulación",
+                "statusDesc": "En obtención de altas",
+                "processStep": "Obtener altas",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Obtener bajas",
+                "activo": 1
+            },
+            "17": {
+                "stepNumber": 17,
+                "status": "En simulación",
+                "statusDesc": "En obtención de bajas",
+                "processStep": "Obtener bajas",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Obtener registros actuales",
+                "activo": 1
             }
         }
     }
