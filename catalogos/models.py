@@ -11,6 +11,7 @@ class Cat_Entidades(models.Model):
         verbose_name = 'Entidades'
         verbose_name_plural = 'Catálogo de entidades'
     snap_id = model_fields['snap_id']['model']
+    par_id = model_fields['par_id']['model']
     fecha_ini = model_fields['fecha_ini']['model']
     fecha_fin = model_fields['fecha_fin']['model']
     fecha_reg = model_fields['fecha_reg']['model']
