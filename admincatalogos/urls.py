@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UploadFilesAPI, FilesStatusAPI, ValidaCifrasAPI, SeguimientoAPI
+from .views import UploadFilesAPI, FilesStatusAPI, ValidaCifrasAPI, SeguimientoAPI, DQAPI
 
 app_name = 'admdata'
 
@@ -8,4 +8,5 @@ urlpatterns = [
     path('listloads', FilesStatusAPI.as_view(), name='listloads'),
     path('seguimiento', SeguimientoAPI.as_view(), name='seguimiento'),
     path('validacifras', ValidaCifrasAPI.as_view(), name='validacifras'),
+    path('dq', DQAPI.as_view(), name='dq'),
 ]

@@ -10,7 +10,7 @@ from .serializers import UploadFilesSerializer, UploadFilesListSerializer, FileM
 from .process.validacioncarga import validacionDeCarga
 from .process.validacioncifras import validacionDeCifras
 from .process.dq import dq
-
+from .process.simulacion import simulacion
 
 # WEBSERVICE LISTA DE CARGAS POR TIPO DE CATÁLOGO
 class FilesStatusAPI(APIView):
@@ -99,10 +99,31 @@ class DQAPI(APIView):
             return Response({'statusRequest': 'error',  'error': 'Id de carga inválido', 'idcarga': idcarga}, status=status.HTTP_400_BAD_REQUEST)
         if request.user != carga.author:
             return Response({'statusRequest': 'error', 'error': 'No tienes permisos sufucientes'}, status=status.HTTP_401_UNAUTHORIZED)
-        if carga.stepNumber != 5:
+        if carga.stepNumber != 9:
             return Response({'statusRequest': 'error', 'error': 'Este proceso no puede ejecutarse en la carga'}, status=status.HTTP_401_UNAUTHORIZED)
         
         serializedResponse = UploadFilesListSerializer(carga)
         resultadoDQ = dq(carga)
+        resultadoDQ['data'] = serializedResponse.data
         
-        return Response({'statusRequest': 'ok', 'data': None}, status=status.HTTP_200_OK)
+        return Response({'statusRequest': 'ok', 'data': resultadoDQ}, status=status.HTTP_200_OK)
+
+class SimulacionAPI(APIView):
+    def get(self, request):
+        if not 'idcarga' in request.query_params:
+            return Response({'statusRequest': 'error', 'error': 'Parámetros insuficientes', 'idcarga': 'Parámetro requerido'}, status=status.HTTP_400_BAD_REQUEST)
+        idcarga = request.query_params.get('idcarga')
+        try:
+            carga = UploadFiles.objects.get(filesId = idcarga)
+        except UploadFiles.DoesNotExist:
+            return Response({'statusRequest': 'error',  'error': 'Id de carga inválido', 'idcarga': idcarga}, status=status.HTTP_400_BAD_REQUEST)
+        if request.user != carga.author:
+            return Response({'statusRequest': 'error', 'error': 'No tienes permisos sufucientes'}, status=status.HTTP_401_UNAUTHORIZED)
+        if carga.stepNumber != 14:
+            return Response({'statusRequest': 'error', 'error': 'Este proceso no puede ejecutarse en la carga'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        serializedResponse = UploadFilesListSerializer(carga)
+        resultadoSimulacion = simulacion(carga)
+        resultadoSimulacion['data'] = serializedResponse.data
+        
+        return Response({'statusRequest': 'ok', 'data': resultadoSimulacion}, status=status.HTTP_200_OK)

@@ -54,4 +54,4 @@ def zfill4(field):
     return field.map('{:0>4}'.format)
 
 def to_date(field):
-    return field.astype(date)
+    return field.astype('datetime64[ns]')
