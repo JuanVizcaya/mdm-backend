@@ -3,10 +3,12 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 import json
 
-from .models import UploadFiles, FileMovements
-from .serializers import UploadFilesSerializer, UploadFilesListSerializer, FileMovementsSerializer
+from .models import UploadFiles, FileMovements, VersionesLocalidades
+from .serializers import UploadFilesSerializer, UploadFilesListSerializer, FileMovementsSerializer, VersionesLocalidadesSerializer
 from .process.validacioncarga import validacionDeCarga
 from .process.validacioncifras import validacionDeCifras
 from .process.dq import dq
@@ -20,7 +22,6 @@ class FilesStatusAPI(APIView):
         filesType = request.query_params.get('catalogo')
         if not filesType in ('entidades', 'municipios', 'localidades'):
             return Response({'statusRequest': 'error', 'error': 'opciones permitidas: entidades, municipios, localidades'}, status=status.HTTP_400_BAD_REQUEST)
-        
         qs = UploadFiles.objects.filter(filesType = filesType)
         serializedData = UploadFilesListSerializer(qs, many=True)
         return Response({'count': len(serializedData.data),'statusRequest': 'ok', 'data': serializedData.data}, status=status.HTTP_200_OK)
@@ -127,3 +128,48 @@ class SimulacionAPI(APIView):
         resultadoSimulacion['data'] = serializedResponse.data
         
         return Response({'statusRequest': 'ok', 'data': resultadoSimulacion}, status=status.HTTP_200_OK)
+    
+    
+class VersionesLocalidadesAPI(APIView):
+    def get(self, request):
+        cargas = VersionesLocalidades.objects.filter(tipo = 'localidades')
+        serializedResponse = VersionesLocalidadesSerializer(cargas, many=True)
+        
+        return Response({'tipo': 'get', 'statusRequest': 'ok', 'data': serializedResponse.data}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        cargas = VersionesLocalidades.objects.filter(tipo = 'localidades')
+        serializedResponse = VersionesLocalidadesSerializer(cargas, many=True)
+        
+        return Response({'tipo': 'post','statusRequest': 'ok', 'data': serializedResponse.data}, status=status.HTTP_200_OK)
+    
+class VersionesLocalidadesTKNAPI(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        if not 'tipo' in request.query_params:
+            return Response({'statusRequest': 'error', 'error': 'Parámetros insuficientes', 'tipo': 'Parámetro requerido'}, status=status.HTTP_400_BAD_REQUEST)
+        tipo = request.query_params.get('tipo')
+        if not tipo in ('entidades', 'municipios', 'localidades'):
+            return Response({'statusRequest': 'error', 'error': 'Parámetros inválido, se aceptan (entidades, municipios, localidades)', 'tipo_enviado': tipo}, status=status.HTTP_400_BAD_REQUEST)
+        tipo = request.query_params.get('tipo')
+        try:
+            cargas = VersionesLocalidades.objects.filter(tipo = tipo)
+        except VersionesLocalidades.DoesNotExist:
+            return Response({'statusRequest': 'error',  'error': 'Tipo inválido, se aceptan "entidades", "municipios" o "localidades"', 'tipo_enviado': tipo}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializedResponse = VersionesLocalidadesSerializer(cargas, many=True)
+        
+        return Response({'tipo': 'get', 'statusRequest': 'ok', 'data': serializedResponse.data}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        if not 'tipo' in request.query_params:
+            return Response({'statusRequest': 'error', 'error': 'Parámetros insuficientes', 'tipo': 'Parámetro requerido'}, status=status.HTTP_400_BAD_REQUEST)
+        tipo = request.query_params.get('tipo')
+        try:
+            cargas = VersionesLocalidades.objects.filter(tipo = tipo)
+        except VersionesLocalidades.DoesNotExist:
+            return Response({'statusRequest': 'error',  'error': 'Tipo inválido, se aceptan "entidades", "municipios" o "localidades"', 'tipo_enviado': tipo}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializedResponse = VersionesLocalidadesSerializer(cargas, many=True)
+        
+        return Response({'tipo': 'get', 'statusRequest': 'ok', 'data': serializedResponse.data}, status=status.HTTP_200_OK)

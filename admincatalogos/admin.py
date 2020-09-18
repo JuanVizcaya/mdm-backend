@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UploadFiles, UploadFilesTrack, FileMovements, MovTypes, LastVersion
+from .models import UploadFiles, UploadFilesTrack, FileMovements, MovTypes, LastVersion, VersionesLocalidades
 
 
 # Register your models here.
@@ -28,3 +28,7 @@ class LastVersionAdmin(admin.ModelAdmin):
     list_display = ('filesType', 'filesVersion', 'uploadedDate')
     search_fields = ['filesVersion']
 
+@admin.register(VersionesLocalidades)
+class VersionesLocalidadesAdmin(admin.ModelAdmin):
+    list_display = ('tipo', 'version', 'fecha_carga', 'num_regs','vigente')
+    search_fields = ['version']

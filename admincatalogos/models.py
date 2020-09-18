@@ -101,3 +101,16 @@ class MovTypes(models.Model):
 
     def __str__(self):
         return f'{self.filesType} - {self.descgo_act} ({self.cgo_act})'
+
+
+
+# TEST API
+class VersionesLocalidades(models.Model):
+    class Meta:
+        verbose_name = 'Versión'
+        verbose_name_plural = 'Versiones cargadas'
+    tipo = models.CharField(max_length=15, verbose_name='Tipo de Catálogo', choices=(('entidades','entidades'),('municipios','municipios'),('localidades','localidades')))
+    version = models.DateField(verbose_name='Versión')
+    fecha_carga = models.DateField(verbose_name='Fecha de la carga')
+    num_regs = models.IntegerField(verbose_name='Número de registros')
+    vigente = models.BooleanField(verbose_name='Vigente')
