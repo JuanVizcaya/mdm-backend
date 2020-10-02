@@ -112,9 +112,9 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        # 'OPTIONS': {
-        #     'options': '-c search_path=djangoadm'
-        # },
+        'OPTIONS': {
+            'options': f'-c search_path={DB_SCHEMA}'
+        },
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
