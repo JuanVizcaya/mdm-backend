@@ -98,10 +98,10 @@ WSGI_APPLICATION = 'mdm.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DB_HOST = 'localhost'
-DB_NAME = 'mdm_dev'
+DB_HOST = 'postgis_db'
+DB_NAME = 'postgres'
 DB_USER = 'postgres'
-DB_PASSWORD = '304032626'
+DB_PASSWORD = 'postgres'
 DB_SCHEMA = 'public'
 DB_PORT = '5432'
 
@@ -119,8 +119,7 @@ DATABASES = {
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
-        'PORT': DB_PORT,
-        'CHARSET': 'utf8'
+        'PORT': DB_PORT
     },
 }
 

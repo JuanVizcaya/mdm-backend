@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  postgis_db:
+    image: mdillon/postgis
+    container_name: postgis_db
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+
+  django_app:
+    build: .
+    container_name: django_app
+    command: python /app/manage.py runserver 0:8000
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      - postgis_db
+
+
+volumes:
+  .:
+  postgres_data:

@@ -140,4 +140,5 @@ cython_debug/
 # ============= PROPIOS ==========
 *.sqlite3
 media/catalogos/*
+*/migrations
 

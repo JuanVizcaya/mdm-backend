@@ -8,7 +8,6 @@ django-celery-results==1.2.1
 django-cors-headers==3.4.0
 django-filter==2.3.0
 djangorestframework==3.11.1
-mod-wsgi==4.7.1
 numpy==1.18.2
 pandas==1.0.3
 Pillow==7.0.0
