@@ -45,8 +45,8 @@ class UserManager(BaseUserManager):
 # Create your models here.
 class Usuario(AbstractUser):
     username = None
-    email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(verbose_name = 'Nombre',max_length = 50, default='')
+    email = models.EmailField(_('email'), unique=True)
+    first_name = models.CharField(verbose_name = 'Nombre', max_length = 50, default='')
     last_name = models.CharField(verbose_name = 'Apellido', max_length = 50, default='')
     image = models.ImageField(default='socio_default.png', upload_to='profile_pics')
     es_admin = models.BooleanField(verbose_name='Es socio', default=False)
@@ -56,9 +56,11 @@ class Usuario(AbstractUser):
 
     objects = UserManager()
 
+    @property
     def get_short_name(self):
         pass
 
+    @property
     def get_full_name(self):
         pass
 

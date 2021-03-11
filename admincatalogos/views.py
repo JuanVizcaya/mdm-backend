@@ -11,8 +11,8 @@ from .models import UploadFiles, FileMovements, VersionesLocalidades
 from .serializers import UploadFilesSerializer, UploadFilesListSerializer, FileMovementsSerializer, VersionesLocalidadesSerializer
 from .process.validacioncarga import validacionDeCarga
 from .process.validacioncifras import validacionDeCifras
-from .process.dq import dq
-from .process.simulacion import simulacion
+from .process.dq.dq import dq_process
+from .process.simulacion.simulacion import sim_process
 
 # WEBSERVICE LISTA DE CARGAS POR TIPO DE CATÁLOGO
 class FilesStatusAPI(APIView):
@@ -128,8 +128,8 @@ class SimulacionAPI(APIView):
         resultadoSimulacion['data'] = serializedResponse.data
         
         return Response({'statusRequest': 'ok', 'data': resultadoSimulacion}, status=status.HTTP_200_OK)
-    
-    
+
+
 class VersionesLocalidadesAPI(APIView):
     def get(self, request):
         cargas = VersionesLocalidades.objects.filter(tipo = 'localidades')
@@ -142,7 +142,7 @@ class VersionesLocalidadesAPI(APIView):
         serializedResponse = VersionesLocalidadesSerializer(cargas, many=True)
         
         return Response({'tipo': 'post','statusRequest': 'ok', 'data': serializedResponse.data}, status=status.HTTP_200_OK)
-    
+
 class VersionesLocalidadesTKNAPI(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):

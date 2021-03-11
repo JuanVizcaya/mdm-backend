@@ -6,15 +6,15 @@ from pandas import read_sql
 from pandas.io import sql
 import json
 
-from ..models import LastVersion, MovTypes, FileMovements
-from .utilities import process_data
-from .tracking import Tracking
+from ...models import LastVersion, MovTypes, FileMovements
+from ..utilities import process_data
+from ..tracking import Tracking
 from catalogos.processing.fields import toConcatenate, model_fields
 
 pData = process_data('DQ')
 
 # FUNCIÓN PRINCIPAL
-def dq(filesLoad):
+def dq_process(filesLoad):
     track = Tracking(filesLoad, pData['steps'], '10')
     try:
         resultados = {}

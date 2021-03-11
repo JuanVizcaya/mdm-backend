@@ -1,4 +1,4 @@
-from admincatalogos.process import dq_functions as dqf
+from admincatalogos.process.dq import dq_functions as dqf
 from django.db.models import CharField, DecimalField, IntegerField, DateField, BooleanField, AutoField
 
 toConcatenate = {
