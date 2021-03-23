@@ -19,11 +19,11 @@ def getSimObject(loadType):
 # FUNCIÓN PRINCIPAL
 def sim_process(filesLoad):
     pData = process_data('simulacion')
-    SIM = getSimObject(filesLoad.filesType)
+    simulator = getSimObject(filesLoad.filesType)
     track = Tracking(filesLoad, pData['steps'], '15')
     try:
         resultados = {}
-        carga = SIM(filesLoad)
+        carga = simulator(filesLoad)
 
         # OBTENCIÓN DE ALTAS
         track.save_step(stepNumber='16')

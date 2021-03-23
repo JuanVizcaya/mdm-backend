@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import UploadFilesAPI, FilesStatusAPI, ValidaCifrasAPI, SeguimientoAPI, DQAPI,VersionesLocalidadesAPI, VersionesLocalidadesTKNAPI
+from .views import (UploadFilesAPI, FilesStatusAPI, ValidaCifrasAPI,
+                    SeguimientoAPI, DQAPI, VersionesLocalidadesAPI,
+                    VersionesLocalidadesTKNAPI)
 
 app_name = 'admdata'
 

@@ -104,7 +104,7 @@ class DQAPI(APIView):
             return Response({'statusRequest': 'error', 'error': 'Este proceso no puede ejecutarse en la carga'}, status=status.HTTP_401_UNAUTHORIZED)
         
         serializedResponse = UploadFilesListSerializer(carga)
-        resultadoDQ = dq(carga)
+        resultadoDQ = dq_process(carga)
         resultadoDQ['data'] = serializedResponse.data
         
         return Response({'statusRequest': 'ok', 'data': resultadoDQ}, status=status.HTTP_200_OK)
@@ -124,7 +124,7 @@ class SimulacionAPI(APIView):
             return Response({'statusRequest': 'error', 'error': 'Este proceso no puede ejecutarse en la carga'}, status=status.HTTP_401_UNAUTHORIZED)
         
         serializedResponse = UploadFilesListSerializer(carga)
-        resultadoSimulacion = simulacion(carga)
+        resultadoSimulacion = sim_process(carga)
         resultadoSimulacion['data'] = serializedResponse.data
         
         return Response({'statusRequest': 'ok', 'data': resultadoSimulacion}, status=status.HTTP_200_OK)
