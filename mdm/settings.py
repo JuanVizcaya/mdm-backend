@@ -100,6 +100,7 @@ WSGI_APPLICATION = 'mdm.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DB_HOST = 'postgis_db'
 DB_NAME = 'postgres'
+# DB_NAME = 'mdm_dev'
 DB_USER = 'postgres'
 DB_PASSWORD = 'postgres'
 DB_SCHEMA = 'public'

@@ -10,10 +10,10 @@ def readTemp(load, cve_ori, cve_act):
     dfs['cat'] = read_sql(f'select * from {load.catTable} where "filesId"=\'{load.filesId}\'', engine)
     dfs['act'] = read_sql(f'select * from {load.actTable} where "filesId"=\'{load.filesId}\'', engine)
     dfs['eqv'] = read_sql(f'select * from {load.eqvTable} where "filesId"=\'{load.filesId}\'', engine)
-    equivs = {
-        'ori': {m[cve_ori]:m for m in dfs['eqv'][isna(dfs['eqv'][cve_ori])].to_dict('records')},
-        'act': {m[cve_act]:m for m in dfs['eqv'][~isna(dfs['eqv'][cve_ori])].to_dict('records')}
-    }
+    equivs = {}
+    if not dfs['eqv'].empty:
+        equivs['ori'] = {m[cve_ori]:m for m in dfs['eqv'][isna(dfs['eqv'][cve_ori])].to_dict('records')}
+        equivs['act'] = {m[cve_act]:m for m in dfs['eqv'][~isna(dfs['eqv'][cve_ori])].to_dict('records')}
     keepFields = dfs['cat'].columns.values.tolist()
     return (dfs, keepFields, equivs)
 
