@@ -29,10 +29,10 @@ class Cat_Entidades(models.Model):
 
 class Tmp_Cat_Entidades(models.Model):
     class Meta:
-        verbose_name = 'Entidades temporales'
-        verbose_name_plural = 'Catálogo de entidades temporal'
+        verbose_name = 'Entidad temporal'
+        verbose_name_plural = 'Entidades temporales'
     carga = models.ForeignKey(UploadFiles, on_delete=models.CASCADE)
-    ent = models.ForeignKey(Cat_Entidades, on_delete=models.CASCADE)
+    ent = models.ForeignKey(Cat_Entidades, on_delete=models.CASCADE, null=True, blank=True)
     snap_id = model_fields['snap_id']['model']
     nuevo_reg = model_fields['nuevo_reg']['model']
     fecha_act = model_fields['fecha_act']['model']

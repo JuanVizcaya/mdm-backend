@@ -32,7 +32,7 @@ def sim_process(filesLoad):
             data = {'status': 'Error en limpieza del catálogo', 'statusDesc': json.dumps(resultados['altas']['errors'])}
             track.save_step(error=True, errorData=data)
             return resultados['altas']
-        track.save_step(stepNumber='17', )
+        track.save_step(stepNumber='17')
 
         return {'valid': True, 'errors': []}
     except: # GUARDA LA EXCEPCIÓN

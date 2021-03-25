@@ -89,7 +89,7 @@ class Sim_Ent(object):
         return {'valid': True, 'errors': errors, 'status': 'Obtención de bajas correcta'}
 
     def makeNewMoves(self, cgos_alta, cgos_baja):
-        newMoves = {'altas': [], 'bajas': [], 'cambios': []}
+        self.newMoves = {'altas': [], 'bajas': [], 'cambios': []}
         # === MOVIMIENTOS EN REGISTRO DE ACTUALIZACIÓN ===
         for idx, row in self.dfs['act'].iterrows():
             cve_mov = row[self.cve_ag]
@@ -97,22 +97,22 @@ class Sim_Ent(object):
             # CASO ALTAS
             if moveType.cgo_act in cgos_alta:
                 newMove = self.newAlta(moveType, row)
-                newMoves['altas'].append(newMove)
+                self.newMoves['altas'].append(newMove)
             # CASO BAJAS
             elif moveType.cgo_act in cgos_baja:
                 newMove = self.newBaja(moveType, row)
-                newMoves['bajas'].append(newMove)
+                self.newMoves['bajas'].append(newMove)
             # CASO CAMBIOS
             else:
                 newMove = self.newMove(moveType, row)
-                newMoves['cambios'].append(newMove)
+                self.newMoves['cambios'].append(newMove)
                 
     def get_rec_activo(self, cve_mov):
         try:
             recActual = self.activas.objects.get(cve_ent=cve_mov)
         except:
             raise f'No se encontró la clave {cve_mov} en el catálogo actual'
-        return recAcual
+        return recActual
 
     def newMove(self, moveType, row):
         cve_mov = row[self.cve_ag]
@@ -172,11 +172,11 @@ class Sim_Ent(object):
     def newAlta(self, moveType, row):
         newMove = {}
         recInCat = self.dfs['cat'].loc[self.dfs['cat'][self.cve_ag] == row[self.cve_ag]]
-        cve_mov = recInCat[self.cve_ag]
         if len(recInCat) == 0:
             raise f"Error, no existe {row[self.cve_ag]} en el catálogo cargado"
         elif len(recInCat) == 1:
             recInCat = recInCat.to_dict('records')[0]
+            cve_mov = recInCat[self.cve_ag]
             # EXISTE EN ALTAS ENCONTRADAS
             if not cve_mov in self.moves['altas'].keys():
                 raise f'Error, no se encontro {newMove[cve_ag]} en los movimientos (altas).'
@@ -198,3 +198,8 @@ class Sim_Ent(object):
         else:
             raise f"Error, existe más de un registro con {row[self.cve_ag]} en catálogo cargado"
         return newMove
+    
+    def saveNewMoves(self):
+        for move_type in self.newMoves:
+            for move in self.newMoves[move_type]:
+                Tmp_Cat_Entidades.objects.create(**move)
