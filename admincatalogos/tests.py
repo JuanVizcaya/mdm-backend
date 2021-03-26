@@ -10,4 +10,3 @@
 #     def test_sim_ent(self):
 #         response = self.carga.getAltasAndMovs()
 #         self.assertTrue(response['valid'])
-        

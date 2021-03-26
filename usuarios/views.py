@@ -20,7 +20,7 @@ class RegisterAPI(APIView):
             data['last_name'] = usuario.last_name
             token = Token.objects.get(user=usuario).key
             data['token'] = token
-            return Response(data)
+            return Response(data, status.HTTP_201_CREATED)
         else:
             data = serializer.errors
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data, status.HTTP_400_BAD_REQUEST)

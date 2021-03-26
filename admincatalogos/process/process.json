@@ -384,6 +384,42 @@
                 "buttons": "0-0-0-0-0",
                 "nextStep": "Obtener registros actuales",
                 "activo": 1
+            },
+            "18": {
+                "stepNumber": 18,
+                "status": "En simulación",
+                "statusDesc": "En obtención de movimientos reportados",
+                "processStep": "Obtener movimientos reportados",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Obtener movimientos no reportados",
+                "activo": 1
+            },
+            "19": {
+                "stepNumber": 19,
+                "status": "En simulación",
+                "statusDesc": "En obtención de movimientos no reportados",
+                "processStep": "Obtener movimientos no reportados",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Salvar todos los movimientos",
+                "activo": 1
+            },
+            "20": {
+                "stepNumber": 20,
+                "status": "En simulación",
+                "statusDesc": "En salvado de todos los movimientos",
+                "processStep": "Guardar todos los movimientos",
+                "buttons": "0-0-0-0-0",
+                "nextStep": "Guardar en tablas temporales",
+                "activo": 1
+            },
+            "21": {
+                "stepNumber": 21,
+                "status": "Simulación correcta",
+                "processStep": "Guardar en tablas temporales",
+                "statusDesc": "Se guardó en tablas temporales",
+                "buttons": "0-0-0-1-1",
+                "nextStep": "-",
+                "activo": 0
             }
         }
     }
