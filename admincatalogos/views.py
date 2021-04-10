@@ -8,11 +8,17 @@ from rest_framework.authentication import TokenAuthentication
 import json
 
 from .models import UploadFiles, FileMovements, VersionesLocalidades
-from .serializers import UploadFilesSerializer, UploadFilesListSerializer, FileMovementsSerializer, VersionesLocalidadesSerializer
 from .process.validacioncarga import validacionDeCarga
 from .process.validacioncifras import validacionDeCifras
 from .process.dq.dq import dq_process
 from .process.simulacion.simulacion import sim_process
+from .serializers import (
+    UploadFilesSerializer, UploadFilesListSerializer,
+    FileMovementsSerializer, VersionesLocalidadesSerializer,
+    TmpEntidadesDataSerializer
+)
+
+from catalogos.models import Tmp_Cat_Entidades
 
 # WEBSERVICE LISTA DE CARGAS POR TIPO DE CATÁLOGO
 class FilesStatusAPI(APIView):
@@ -42,32 +48,88 @@ class UploadFilesAPI(APIView):
             responseData = serializedData.errors
             return Response(responseData, status=status.HTTP_400_BAD_REQUEST)
 
-# WEBSERVICE INFO SEGUIMIENTO DE CARGA
-# TODO: B - TERMINAR DE CONSTRUIR
 class SeguimientoAPI(APIView):
+    """ ENDPOINT INFO SEGUIMIENTO DE CARGA """
     def get(self, request):
         # CARD - SEGUIMIENTO
         if not 'idcarga' in request.query_params:
-            return Response({'statusRequest': 'error', 'error': 'Parámetros insuficientes', 'idcarga': 'Parámetro requerido'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    'statusRequest': 'error',
+                    'error': 'Parámetros insuficientes',
+                    'idcarga': 'Parámetro requerido'
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         idcarga = request.query_params.get('idcarga')
         try:
-            qsSeguimiento = UploadFiles.objects.get(filesId = idcarga)
+            load = UploadFiles.objects.get(filesId = idcarga)
         except UploadFiles.DoesNotExist:
-            return Response({'statusRequest': 'error', 'error': 'Id de carga inválido', 'idcarga': idcarga}, status=status.HTTP_400_BAD_REQUEST)
-        if request.user != qsSeguimiento.author:
-            return Response({'statusRequest': 'error', 'error': 'No tienes permisos sufucientes'}, status=status.HTTP_401_UNAUTHORIZED)
-        seguimientoSerializedData = UploadFilesListSerializer(qsSeguimiento)
+            return Response(
+                {
+                    'statusRequest': 'error',
+                    'error': 'Id de carga inválido',
+                    'idcarga': idcarga
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if request.user != load.author:
+            return Response(
+                {
+                    'statusRequest': 'error',
+                    'error': 'No tienes permisos sufucientes'
+                },
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        seguimientoSerializedData = UploadFilesListSerializer(load)
         
         # CARD - RESULTADOS
-        qsResultados = FileMovements.objects.filter(UploadFiles = qsSeguimiento)
+        qsResultados = FileMovements.objects.filter(UploadFiles = load)
         if not qsResultados:
             dataResultados = None
         else:
             dataResultados = FileMovementsSerializer(qsResultados, many=True).data
 
-        # TODO: C - CONSTRUIR CARD DATOS
         # CARD - DATOS
-        return Response({'statusRequest': 'ok', 'dataSeguimiento': seguimientoSerializedData.data, 'dataResultados': dataResultados, 'dataDatos': None}, status=status.HTTP_200_OK)
+        dataDatosExists = False
+        if Tmp_Cat_Entidades.objects.filter(carga=load).exists():
+            dataDatosExists = True
+        
+        return Response(
+            {
+                'statusRequest': 'ok',
+                'dataSeguimiento': seguimientoSerializedData.data,
+                'dataResultados': dataResultados,
+                'dataDatosExists': dataDatosExists
+            },
+            status=status.HTTP_200_OK
+        )
+        
+# TODO: C - CONSTRUIR CARD DATOS SERVICE
+class CardDatosAPI(APIView):
+    def get(self, request):
+        if not 'idcarga' in request.query_params:
+            return Response({'statusRequest': 'error', 'error': 'Parámetros insuficientes', 'idcarga': 'Parámetro requerido'}, status=status.HTTP_400_BAD_REQUEST)
+        idcarga = request.query_params.get('idcarga')
+        try:
+            carga = UploadFiles.objects.get(filesId = idcarga)
+        except UploadFiles.DoesNotExist:
+            return Response({'statusRequest': 'error',  'error': 'Id de carga inválido', 'idcarga': idcarga}, status=status.HTTP_400_BAD_REQUEST)
+        if request.user != carga.author:
+            return Response({'statusRequest': 'error', 'error': 'No tienes permisos sufucientes'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        qs = Tmp_Cat_Entidades.objects.filter(carga=carga)
+        if not qs.exists():
+            return Response(
+                {'statusRequest': 'error', 'error': 'No existen movimientos para esta carga'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = TmpEntidadesDataSerializer(qs, many=True)
+        return Response(
+            {'statusRequest': 'ok', 'data': serializer.data}
+        )
 
 # WEBSERVICE PASO 2 - VALIDACIÓN DE CIFRAS
 class ValidaCifrasAPI(APIView):

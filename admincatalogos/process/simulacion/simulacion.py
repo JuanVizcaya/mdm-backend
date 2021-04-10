@@ -24,8 +24,8 @@ def valid_step(resultados, track):
         return False
     return True
 
-# FUNCIÓN PRINCIPAL
 def sim_process(filesLoad):
+    """ FUNCIÓN PRINCIPAL """
     pData = process_data('simulacion')
     simulator = getSimObject(filesLoad.filesType)
     track = Tracking(filesLoad, pData['steps'], '15')
