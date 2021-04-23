@@ -106,7 +106,8 @@ class SeguimientoAPI(APIView):
             },
             status=status.HTTP_200_OK
         )
-        
+
+
 # TODO: C - CONSTRUIR CARD DATOS SERVICE
 class CardDatosAPI(APIView):
     def get(self, request):

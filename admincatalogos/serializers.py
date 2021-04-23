@@ -52,7 +52,9 @@ class TmpEntidadesDataSerializer(serializers.ModelSerializer):
             'p_fem',
             'cgo_act',
             'descgo_act',
-            'mov_inegi'
+            'mov_inegi',
+            'nuevo_reg',
+            'es_activa'
         )
 
 class VersionesLocalidadesSerializer(serializers.ModelSerializer):
